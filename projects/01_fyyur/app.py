@@ -8,6 +8,7 @@ import babel
 from flask import Flask, render_template, request, Response, flash, redirect, url_for
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Table, Column, Integer, ForeignKey
 from flask_migrate import Migrate
 import logging
 from logging import Formatter, FileHandler
@@ -45,6 +46,7 @@ class Venue(db.Model):
     website = db.Column(db.String(120))
     seeking_talent = db.Column(db.Boolean)
     description = db.Column(db.String(500))
+    artists = db.relationship("Artist", secondary=Show, back_populates="venues")
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -63,10 +65,21 @@ class Artist(db.Model):
     website = db.Column(db.String(120))
     seeking_venue = db.Column(db.Boolean)
     description = db.Column(db.String(500))
+    venues = db.relationship("Venue", secondary=Show, back_populates="artists")
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
+class Show(db.Model):
+    __tablename__ = 'Show'
+
+    id = db.Column(db.Integer, primary_key=True)
+    artist_id = db.Column(db.Integer, ForeignKey('Artist.id'))
+    artist_name = db.Column(db.String(120))
+    venue_id = db.Column(db.Integer, ForeignKey('Venue.id'))
+    venue_name = db.Column(db.String(120))
+    artist_image_link = db.Column(db.String(500))
+    start_time = db.Column(db.String(120))
 
 #----------------------------------------------------------------------------#
 # Filters.
