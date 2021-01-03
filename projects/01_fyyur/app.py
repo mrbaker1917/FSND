@@ -46,7 +46,7 @@ class Venue(db.Model):
     website = db.Column(db.String(120))
     seeking_talent = db.Column(db.Boolean)
     description = db.Column(db.String(500))
-    artists = db.relationship("Artist", secondary=Show, back_populates="venues")
+    artists = db.relationship("Artist", back_populates="venues")
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -65,7 +65,7 @@ class Artist(db.Model):
     website = db.Column(db.String(120))
     seeking_venue = db.Column(db.Boolean)
     description = db.Column(db.String(500))
-    venues = db.relationship("Venue", secondary=Show, back_populates="artists")
+    venues = db.relationship("Venue", back_populates="artists")
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
