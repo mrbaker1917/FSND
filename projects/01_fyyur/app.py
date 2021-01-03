@@ -42,7 +42,7 @@ class Venue(db.Model):
     phone = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
-    genres = db.Column(db.String(500))
+    genres = db.Column(db.ARRAY(db.String))
     website = db.Column(db.String(120))
     seeking_talent = db.Column(db.Boolean)
     description = db.Column(db.String(500))
@@ -59,7 +59,7 @@ class Artist(db.Model):
     city = db.Column(db.String(120))
     state = db.Column(db.String(120))
     phone = db.Column(db.String(120))
-    genres = db.Column(db.String(120))
+    genres = db.Column(db.ARRAY(db.String))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
     website = db.Column(db.String(120))
@@ -252,6 +252,7 @@ def create_venue_form():
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
     # TODO: insert form data as a new Venue record in the db, instead
+
     # TODO: modify data to be the data object returned from db insertion
 
     # on successful db insert, flash success
